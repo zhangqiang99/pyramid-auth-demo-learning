@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p><a href="{{request.route_url("home")}}"> Home </a></p>
+<h1>All users</h1>
+
+{% for user in users %}
+	<p> <a href="{{ request.route_url('show_user', email_address=user.email_address) }}">
+			{{user.email_address}}
+	</a> </p>
+{% endfor %}
+		
+{% endblock %}

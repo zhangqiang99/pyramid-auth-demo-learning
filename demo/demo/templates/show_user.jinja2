@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<p><a href="{{ request.route_url('home') }}">Home</a></p>
+
+<h1>User Information</h1>
+<p>Login: {{ user.email_address }} ====  {{user.user_id}}</p>
+<p>Password: {{ user.password }}</p>
+
+<p>Groups:
+<ul>
+{% for group in user.groups %}
+    <li>{{ group.group_name }}</li>
+{% endfor %}
+</ul>
+</p>
+
+
+<p>All Articles</p>
+<ul>
+{% for article in user.articles %}
+    <li> <a href="{{request.route_url('show_article', article_id=article.id)}}">{{ article.title }}</a>  </li>
+{% endfor %}
+</ul>
+		
+{% endblock %}

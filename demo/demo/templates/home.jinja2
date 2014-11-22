@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{{ request.host }}
+
+{% if user %}
+	<p>You are logged in as: {{ user.email_address }}  ===  {{user.user_id}}</p>
+	<p><a href="{{ request.route_url('logout') }}">Logout</a></p>
+{% else %}
+	<p>You are not logged in!</p>
+	<p><a href="{{ request.route_url('login') }}">Login</a></p>
+	<p><a href="{{ request.route_url('home') }}">Create account</a></p>
+{% endif %}
+
+<hr/>
+<p>Create a article <a href="{{request.route_url('create_article')}}">Right here, right now ?</a></p>
+
+<ul class="blocks-2">
+    <li><p><a href="{{ request.route_url('list_articles') }}">All Articles</a></p></li>
+    <li><p><a href="{{ request.route_url('list_users') }}">All Users</a></p></li>
+</ul>
+
+<hr/>
+<h2>Your Pages</h2>
+{% if user.articles %}
+	{% for article in user.articles %}
+		<p> <a href="{{request.route_url('show_article', article_id=article.id)}}">{{article.title}}</a> </p>
+	{% endfor %}
+{% else %}
+	<p>You have not created any articles.</p>
+{% endif %}
+		
+		
+{% endblock %}

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  {% block head %}
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta name="keywords" content="python web application" />
+	<meta name="description" content="pyramid web application" />
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+	<link rel="stylesheet" href="{{request.static_url('demo:static/css/kube.css')}}"
+        type="text/css" media="screen" charset="utf-8" />
+	<script src="{{request.static_url('demo:static/js/kube.js')}}"></script>
+	<script src="{{request.static_url('demo:static/jquery.js')}}"></script>    
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}{% endblock %} -Home--page - Pyramid auth demo</title>
+  {% endblock %}
+</head>
+<body style="margin: 40px;">
+	<div class="units-row">
+		<!-- ================================================== -->
+		<div class="units-row"  id="header">
+			<div class="unit-row color-gray-50">
+				{% block header %}
+<header class="group">
+    <nav class="navbar navbar-left">
+        <ul>
+            <li><a href="{{request.route_url('home')}}">Home</a></li>
+            <li><a href="{{request.route_url('list_articles')}}">Articles</a></li>
+            <li><a href="{{request.route_url('list_users')}}">Users</a></li> 
+            <li><a href="{{request.route_url('create_article')}}">+New Article</a></li>
+        </ul>
+    </nav>
+    <nav class="navbar navbar-right">
+		{% if request.authenticated_userid %}
+			<ul>
+				<li><a href="{{request.route_url('show_user', email_address=request.authenticated_userid)}}">{{request.authenticated_userid}}</a></li>   				           
+				<li><a href="{{request.application_url}}/logout">Logout</a></li>             
+			</ul>		
+		{%	else %}
+			<ul>
+				<li><button class="btn btn-outline">Sign Up</button></li>
+				<li><a href="{{request.route_url('login')}}" class="btn">Sign In</a></li>             
+			</ul>		
+		{% endif %}
+    </nav>
+</header>				
+				
+				 {% endblock %}
+			</div>		
+			<hr/>
+		</div>	
+		<!-- ================================================= -->
+		<!-- ================================================= -->
+		<div class="units-row" id="nav">
+			<div class="unit-row">
+				{% block nav %}
+				{% endblock %}
+			</div>
+		</div>	
+		<!-- ================================================= -->	
+		<!-- ================================================= -->
+		<div class="units-row" id="content">
+			<div class="unit-row">
+				{% block content %}
+				
+				{% endblock %}
+			</div>
+		</div>	
+		<!-- ================================================= -->		
+		<div class="units-row" id="footer">
+			<div class="unit-row">
+					<hr/>
+			        {% block footer %}
+						&copy; Copyright 2008 by <a href="http://domain.invalid/">you</a>.
+					{% endblock %}
+			</div>
+		</div>					
+	</div>	
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<p><a href="{{ request.route_url('home') }}"  class="btn">Home</a></p>
+	<p>
+		<a href="{{request.route_url('create_article')}}" class="btn">  Add a article, right now? </a>
+	</p>
+	<hr/>	
+	<ul>
+	{% for article in articles %}
+		<li>
+			<a href="{{request.route_url("show_article", article_id=article.id)}}">{{ article.title }}  </a>
+		    <span  class="label">author-id:  {{article.author.user_id}}</span>   
+		    <span  class="label">author-id: {{article.user_id}}</span>  
+		    <span  class="label">article-id:{{article.id}}</span>
+		</li>
+	{% else %}
+		<li><em>No articles found</em></li>
+	{% endfor %}
+	</ul>
+		
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<h2>{{article.title}}</h4>
+	<h4>  {{article.id}}   ||   {{article.created_at}} 
+			<a href="{{request.route_url('edit_article', article_id=article.id)}}"> Edit this article  </a>	
+			<a href="{{request.route_url('delete_article', article_id=article.id)}}">Delete Article</a>
+	</h4>		
+	<p>Author: 
+			<a href="{{request.route_url("show_user", email_address=article.author.email_address)}}"> {{article.author.user_name}} </a>
+	</p>
+	<p>{{article.content}}</p>
+	
+{% endblock %}
+
+

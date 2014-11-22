@@ -1,0 +1,146 @@
+import os
+import sys
+import transaction
+
+from sqlalchemy import engine_from_config
+
+from pyramid.paster import (
+    get_appsettings,
+    setup_logging,
+    )
+
+from pyramid.scripts.common import parse_vars
+
+from ..models import (
+    DBSession,
+    MyModel,
+    Base,
+    )
+from ..models import *    
+    
+
+
+def usage(argv):
+    cmd = os.path.basename(argv[0])
+    print('usage: %s <config_uri> [var=value]\n'
+          '(example: "%s development.ini")' % (cmd, cmd))
+    sys.exit(1)
+
+
+def main(argv=sys.argv):
+    if len(argv) < 2:
+        usage(argv)
+    config_uri = argv[1]
+    options = parse_vars(argv[2:])
+    setup_logging(config_uri)
+    settings = get_appsettings(config_uri, options=options)
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    DBSession.configure(bind=engine)
+    Base.metadata.create_all(engine)
+    with transaction.manager:
+        model = MyModel(name='one', value=1)
+        DBSession.add(model)
+########
+        u = User()
+        u.user_name = 'manager'
+        u.display_name = 'Example manager'
+        u.email_address = 'manager@somedomain.com'
+        u.password = 'managepass'
+
+        u1 = User()
+        u1.user_name = 'look'
+        u1.display_name = 'Look Example manager'
+        u1.email_address = 'look@gmail.com'
+        u1.password = 'lookpass'
+
+        u2 = User()
+        u2.user_name = 'black'
+        u2.display_name = 'black manager'
+        u2.email_address = 'black@gmail.com'
+        u2.password = 'blackpass'
+
+        ud = User()
+        ud.user_name = 'demo'
+        ud.display_name = 'demo manager'
+        ud.email_address = 'demo@gmail.com'
+        ud.password = 'demopass'
+
+        ud1 = User()
+        ud1.user_name = 'admin'
+        ud1.display_name = 'admin manager'
+        ud1.email_address = 'admin@gmail.com'
+        ud1.password = 'adminpass'
+        ud2 = User()
+        ud2.user_name = 'root'
+        ud2.display_name = 'root manager'
+        ud2.email_address = 'root@gmail.com'
+        ud2.password = 'rootpass'    
+        
+        pp = User()
+        pp.user_name = 'pp'
+        pp.display_name = 'pp--manager'
+        pp.email_address = 'pp@gmail.com'
+        pp.password = 'pppass'               
+                                
+        g = Group()
+        g.group_name = 'managers'
+        g.display_name = 'Managers Group'
+
+        e = Group()
+        e.group_name = 'editors'
+        e.display_name = 'editors'
+        
+        ead = Group()
+        ead.group_name = 'admins'
+        ead.display_name = 'admins'        
+        ead.users.append(ud1)
+        ead.users.append(ud2)
+        ead.users.append(pp)
+
+        e.users.append(u)
+        e.users.append(u1)
+        e.users.append(u2)  
+        e.users.append(ud)
+        e.users.append(pp)
+                    
+        g.users.append(u)
+        g.users.append(u1)
+        g.users.append(u2)                
+    
+        DBSession.add(g)
+        DBSession.add(e)
+        DBSession.add(ead)        
+			
+        p = Permission()
+        p.permission_name = 'manage'
+        p.description = 'This permission give an administrative right to the bearer'
+        p.groups.append(g)
+
+        ep = Permission()
+        ep.permission_name = 'edit'
+        ep.description = 'This permission give an administrative right to the bearer'
+        ep.groups.append(e)
+        
+            
+        DBSession.add(p)
+        DBSession.add(ep)
+            
+        u12 = User()
+        u12.user_name = 'editor'
+        u12.display_name = 'Example editor'
+        u12.email_address = 'editor@somedomain.com'
+        u12.password = 'editpass'
+    
+        DBSession.add(u12)
+
+#		a1 = Article(title="11sadasdsad ", content="213sadksad sad 98sa98d98sad ", author = u)		
+#		DBSession.add_all([a1, a2, a3, a4])
+        a1 = Article(title="11111111111", content="sdakjskdkjds", author=u)
+        a2 = Article(title="1222221111", content="sdakjskdkjds", author=u1)
+        a3 = Article(title="33333311", content="sdakjskdkjds", author=u2)
+        a4 = Article(title="44444444444", content="sdakjskdkjds", author=ud)
+        a5 = Article(title="55511", content="sdakjskdkjds", author=u1)
+        a6 = Article(title="66666661", content="sdakjskdkjds", author=ud)
+        
+        DBSession.add_all([a1, a2, a3, a4, a5, a6])
+#########################################################################

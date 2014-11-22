@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2> exception HTTPForbidden(detail=None, headers=None, comment=None, body_template=None, result=None, **kw)[source]¶
+subclass of HTTPClientError</h2>
+	
+	<p>
+code: 403, title: Forbidden
+
+Raise this exception within view code to immediately return the forbidden view to the invoking user. Usually this is a basic 403 page, but the forbidden view can be customized as necessary. See Changing the Forbidden View. A Forbidden exception will be the context of a Forbidden View.
+
+This exception's constructor treats two arguments specially. The first argument, detail, should be a string. The value of this string will be used as the message attribute of the exception object. The second special keyword argument, result is usually an instance of pyramid.security.Denied or pyramid.security.ACLDenied each of which indicates a reason for the forbidden error. However, result is also permitted to be just a plain boolean False object or None. The result value will be used as the result attribute of the exception object. It defaults to None.
+
+The Forbidden View can use the attributes of a Forbidden exception as necessary to provide extended information in an error report shown to a user.
+
+	
+	
+	</p>
+
+	
+{% endblock %}
+

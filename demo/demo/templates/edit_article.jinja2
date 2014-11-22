@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="post" action="{{save_url}}" class="forms">
+     <p>
+		<input type="text" name="title" class="width-50" value="{{article.title}}" />
+     </p>
+     
+	<p>
+		<textarea name="content" class="width-50" rows="5">{{article.content}}</textarea>	
+	</p>
+
+	<p>
+		Author:  {{article.user_id}}	
+	</p>
+
+    <p>
+        <input type="submit" name="form.submitted" value="Edit Article">
+    </p>
+</form>
+
+{% endblock %}

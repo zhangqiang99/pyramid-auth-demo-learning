@@ -1,0 +1,5 @@
+      [paste.app_factory]
+      main = demo:main
+      [console_scripts]
+      initialize_demo_db = demo.scripts.initializedb:main
+      

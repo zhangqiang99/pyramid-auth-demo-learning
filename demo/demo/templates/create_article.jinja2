@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+		{% if loggedin %}
+			<a href="{{request.application_url}}/logout">Logout</a>		
+		{% endif %}
+
+
+<form  action="{{save_url}}"  method="post" class="forms">
+    <label>
+        Title
+        <input type="text" name="title" class="width-50" value="{{article.title}} "/>
+    </label>
+    
+    
+    <label>
+		Content
+		<textarea name="content" class="width-50" rows="5">{{article.content}}</textarea>
+
+    </label>
+
+    <label>
+		Author
+		<p>{{article.user_id}}</p>
+
+    </label>
+    
+    <p>
+       <input type="submit" name="form.submitted" value="Create Article" class="btn" /> 
+    </p>
+</form>
+
+{% endblock %}
